@@ -10,6 +10,7 @@ import { Audio } from 'expo-av';
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import sleep from './sleep';
 import DigitalTimeString from './DigitalTimeString';
+import * as FileSystem from 'expo-file-system';
 
 const TRACK_SIZE = 4;
 const THUMB_SIZE = 20;
@@ -128,7 +129,15 @@ export default class AudioSlider extends PureComponent {
 
     async componentDidMount() {
         this.soundObject = new Audio.Sound();
-        await this.soundObject.loadAsync(this.props.audio);
+        const url = this.props.audio;
+        const splitUrl = url.split('/');
+        const lastItem = splitUrl[splitUrl.length - 1];
+        const { uri } = await FileSystem.downloadAsync(
+            url,
+            FileSystem.documentDirectory + lastItem
+        );
+        console.log("Local File:", uri);
+        await this.soundObject.loadAsync({uri: uri});
         const status = await this.soundObject.getStatusAsync();
         this.setState({ duration: status["durationMillis"] });
 

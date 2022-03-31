@@ -2,7 +2,6 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import styles from './styles';
 import AudioSlider from './src/AudioSlider';
-import AudioFile from './assets/counting.m4a';
 
 
 export default function App() {
@@ -35,7 +34,7 @@ export default function App() {
 
             </View>
 
-            <AudioSlider audio={AudioFile}/>
+            <AudioSlider audio={'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'}/>
 
         </View>
   );
